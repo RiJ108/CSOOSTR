@@ -1,0 +1,35 @@
+t = 0
+tf in = 10
+
+for c in C
+	initialiser c (s = s0 et tr = ta(s0))
+
+while(t < tf in)
+	for c in C
+		construire une liste de composant imminents imms (tr = trmin)
+		stocker le plus petit tr dans trmin
+
+	t = t + trmin
+
+	for c in C
+		mise à jour de e et de tr
+
+	for c in imms
+		c.lambda()
+
+	for c in C
+		construire la liste des entrées ins impactées par les sorties produites
+		pour chaque sortie produite, transmettre la valeur contenue dans cette
+		sortie aux entrées connectées
+
+	for c in C
+		if c in imms et c.ins = null
+			c.internal
+			mise à jour de tr, e, tl et tn du composant c
+		else if c not in imms et c.ins not null
+			c.external
+			mise à jour de tr, e, tl et tn du composant c
+		else if c in imms et c.ins not null
+			c.conflit
+			mise à jour de tr, e, tl et tn du composant c
+end
