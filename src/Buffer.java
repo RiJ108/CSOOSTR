@@ -22,7 +22,6 @@ public class Buffer extends Component{
 	@Override
 	public boolean external() {
 		// TODO Auto-generated method stub
-		boolean tmp;
 		int current_state = getCurrent_state();
 		if(current_state == 0 && getInputs().get(0).getValue() != null) {
 			q++;
@@ -45,13 +44,11 @@ public class Buffer extends Component{
 				setNext_state(0);
 			}
 		}
-		tmp = isSwitched();
-		swapState();
-		return tmp;
+		return swapState();
 	}
 
 	@Override
-	public void internal() {
+	public boolean internal() {
 		// TODO Auto-generated method stub
 		switch(getCurrent_state()) {
 		case 1:
@@ -59,7 +56,7 @@ public class Buffer extends Component{
 			isSwitched(true);
 			setNext_state(2);
 		}
-		swapState();
+		return swapState();
 	}
 
 	@Override

@@ -75,7 +75,7 @@ public abstract class Component {
 		this.switched = switched;
 	}
 	abstract public boolean external();
-	abstract public void internal();
+	abstract public boolean internal();
 	abstract public void lambda();
 	abstract public double ta();
 	abstract public int getQ();
@@ -88,11 +88,13 @@ public abstract class Component {
 		isSwitched(false);
 	}
 	
-	public void swapState() {
+	public boolean swapState() {
 		if(isSwitched()) {
 			System.out.printf("  %s switch from %d to %d\n", getName(), current_state, next_state);
 			current_state = next_state;
+			return true;
 		}
+		return false;
 	}
 	
 	public ArrayList<Port> getIns(){

@@ -13,21 +13,18 @@ public class Generator extends Component{
 	@Override
 	public boolean external() {
 		// TODO Auto-generated method stub
-		boolean tmp;
-		tmp = isSwitched();
-		swapState();
-		return tmp;
+		return swapState();
 	}
 
 	@Override
-	public void internal() {
+	public boolean internal() {
 		// TODO Auto-generated method stub
 		switch(getCurrent_state()) {
 		case 0:
 			isSwitched(true);
 			setNext_state(0);
 		}
-		swapState();
+		return swapState();
 	}
 
 	@Override
