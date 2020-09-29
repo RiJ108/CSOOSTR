@@ -10,7 +10,7 @@ public class Scheduler {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		init();
-		run();
+		run(false);
 	}
 	
 	public static void init() {
@@ -42,12 +42,12 @@ public class Scheduler {
 		tf = 6.0;
 	}
 	
-	public static void run() {
+	public static void run(boolean show) {
 		while(t <= tf) {
 			System.out.printf("____________________________________________________________________________________________________"
 					+ "\n____________________________________________________________________________________________________"
 					+ "\nt=%.1f\n", t);
-			getTr_min();
+			getTr_min(show);
 			updateImms();
 			stepTime();
 			showBufferQ();
@@ -55,9 +55,9 @@ public class Scheduler {
 			showOuts();
 			updateE();
 			updateTr();
-			lambdaCalls();
+			lambdaCalls(show);
 			updateIns();
-			refresh();
+			refresh(show);
 			clearInputs();
 		}
 	}
@@ -66,13 +66,16 @@ public class Scheduler {
 		t += tr_min;
 	}
 	
-	public static void getTr_min() {
+	public static void getTr_min(boolean show) {
 		tr_min = Double.POSITIVE_INFINITY;
-		System.out.println("___tr_min loop___");
+		if(show)
+			System.out.println("___tr_min loop___");
 		for(Component comp : components) {
-			System.out.printf("%s(%d)\ttr=%.1f",comp.getName(), comp.getCurrent_state(), comp.getTr());
-			System.out.printf("  \te=%.1f   \ttl=%.1f  \ttn=%.1f", comp.getE(), comp.getTl(), comp.getTn());
-			System.out.println("");
+			if(show) {
+				System.out.printf("%s(%d)\ttr=%.1f",comp.getName(), comp.getCurrent_state(), comp.getTr());
+				System.out.printf("  \te=%.1f   \ttl=%.1f  \ttn=%.1f", comp.getE(), comp.getTl(), comp.getTn());
+				System.out.println("");
+			}
 			if(comp.getTr() < tr_min) {
 				tr_min = comp.getTr();
 			}
@@ -104,10 +107,11 @@ public class Scheduler {
 		}
 	}
 	
-	public static void lambdaCalls() {
-		System.out.println("\n___Lambda calls loop(t+tr_min)___");
+	public static void lambdaCalls(boolean show) {
+		if(show)
+		 System.out.println("\n___Lambda calls loop(t+tr_min)___");
 		for(Component comp : imms) {
-			comp.lambda();
+			comp.lambda(show);
 		}
 	}
 	
@@ -123,21 +127,25 @@ public class Scheduler {
 		}
 	}
 	
-	public static void refresh() {
-		System.out.println("\n___Refresh loop___");
+	public static void refresh(boolean show) {
+		if(show)
+			System.out.println("\n___Refresh loop___");
 		for(Component comp : components) {
 			if(imms.contains(comp) && comp.getIns() == null) {
-				System.out.printf("(case 0)imms containt %s and his .ins is null.\n", comp.getName());
-				comp.internal();
+				if(show)
+					System.out.printf("(case 0)imms containt %s and his .ins is null.\n", comp.getName());
+				comp.internal(show);
 				comp.updateTimers(t);
 			}else if(!imms.contains(comp) && comp.getIns() != null) {
-				System.out.printf("(case 1)imms doesn't containt %s and his .ins is not null.\n", comp.getName());
-				comp.external();
+				if(show)
+					System.out.printf("(case 1)imms doesn't containt %s and his .ins is not null.\n", comp.getName());
+				comp.external(show);
 				comp.updateTimers(t);
 			}else if(imms.contains(comp) && comp.getIns() != null) {
-				System.out.printf("(case 2)imms containt %s and his .ins is null.\n", comp.getName());
-				if(!comp.external()) {
-					comp.internal();
+				if(show)
+					System.out.printf("(case 2)imms containt %s and his .ins is null.\n", comp.getName());
+				if(!comp.external(show)) {
+					comp.internal(show);
 				}
 				comp.updateTimers(t);
 			}

@@ -74,9 +74,9 @@ public abstract class Component {
 	public void isSwitched(boolean switched) {
 		this.switched = switched;
 	}
-	abstract public boolean external();
-	abstract public boolean internal();
-	abstract public void lambda();
+	abstract public boolean external(boolean show);
+	abstract public boolean internal(boolean show);
+	abstract public void lambda(boolean show);
 	abstract public double ta();
 	abstract public int getQ();
 	
@@ -88,9 +88,10 @@ public abstract class Component {
 		isSwitched(false);
 	}
 	
-	public boolean swapState() {
+	public boolean swapState(boolean show) {
 		if(isSwitched()) {
-			System.out.printf("  %s switch from %d to %d\n", getName(), current_state, next_state);
+			if(show)
+				System.out.printf("  %s switch from %d to %d\n", getName(), current_state, next_state);
 			current_state = next_state;
 			return true;
 		}

@@ -10,33 +10,33 @@ public class Processor extends Component{
 	}
 
 	@Override
-	public boolean external() {
+	public boolean external(boolean show) {
 		// TODO Auto-generated method stub
 		int current_state = getCurrent_state();
 		if(current_state == 0 && getInputs().get(0).getValue() != null) {
 			isSwitched(true);
 			setNext_state(1);
 		}
-		return swapState();
+		return swapState(show);
 	}
 
 	@Override
-	public boolean internal() {
+	public boolean internal(boolean show) {
 		// TODO Auto-generated method stub
 		switch(getCurrent_state()) {
 		case 1:
 			isSwitched(true);
 			setNext_state(0);
 		}
-		return swapState();
+		return swapState(show);
 	}
 
 	@Override
-	public void lambda() {
+	public void lambda(boolean show) {
 		// TODO Auto-generated method stub
 		switch(getCurrent_state()) {
 		case 1:
-			getOutputs().get(0).setValue(true, true);
+			getOutputs().get(0).setValue(true, show);
 		}
 	}
 
