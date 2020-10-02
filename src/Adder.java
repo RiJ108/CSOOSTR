@@ -24,6 +24,29 @@ public class Adder extends Component{
 		values = new ArrayList<Double>();
 	}
 	
+	public ArrayList<Double> getValues(){
+		return values;
+	}
+	
+	public void hold() {
+		System.out.println("Hold function****");
+		int index = 0;
+		for(Port in : getInputs()) {
+			if(in.getValue() != null) {
+				getValues().set(index, (double)in.getValue());
+			}
+			index++;
+		}
+	}
+	
+	public void sumupInputs() {
+		System.out.println("SUMUP function****");	
+		sum = 0.0;
+		for(Double value : values) {
+			sum += value;
+		}
+	}
+	
 	@Override
 	public void addInput(Port input) {
 		super.addInput(input);
@@ -36,6 +59,7 @@ public class Adder extends Component{
 		switch(getCurrent_state()) {
 		case 0:
 			isSwitched(true);
+			hold();
 			setNext_state(1);
 		}
 		return swapState(show);
@@ -58,20 +82,8 @@ public class Adder extends Component{
 		switch(getCurrent_state()) {
 		case 1:
 			sumupInputs();
+			getOutputs().get(0).setValue(getValue(), show);
 			break;
-		}
-	}
-	
-	public void sumupInputs() {
-		System.out.println("SUMUP function****");
-		double sum = 0.0;
-		for(Port in : getInputs()) {
-			sum += (double)in.getValue();
-		}
-		this.sum = sum;
-		
-		for(Double value : values) {
-			System.out.println(value);
 		}
 	}
 

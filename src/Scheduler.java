@@ -34,6 +34,9 @@ public class Scheduler {
 		Output y_o3 = new Output("Stepper_0_y(out)");
 		Input y_i3 = new Input("Adder_y3(in)", y_o3);
 		
+		Output s_o0 = new Output("Adder_i0(out)");
+		Input s_i0 = new Input("Integrator_s0(in)", s_o0);
+		
 		Stepper stepper_0 = new Stepper("Stepper_0", 1.0, -3.0, 0.65);
 		stepper_0.addOutput(y_o0);
 		
@@ -51,25 +54,36 @@ public class Scheduler {
 		adder.addInput(y_i1);
 		adder.addInput(y_i2);
 		adder.addInput(y_i3);
+		adder.addOutput(s_o0);
+		
+		Integrator integrator = new Integrator("Integrator", 0.001);
+		integrator.setTr(integrator.ta());
+		integrator.setCI(0.0);
+		integrator.setDeri(0.0);
+		integrator.addInput(s_i0);
 		
 		components.add(stepper_0);
 		components.add(stepper_1);
 		components.add(stepper_2);
 		components.add(stepper_3);
 		components.add(adder);
+		components.add(integrator);
 		
-		tf= 1.5;
+		tf= 5.0;
 	}
 	
 	public static void run_exo_2(boolean show) {
 		ChartFrame chartframe = new ChartFrame("Resultat", "Stepper Adder");
-		Chart cS = new Chart("sum");
-		chartframe.addToLineChartPane(cS);
+		Chart cDeri = new Chart("Derivate");
+		Chart cInte = new Chart("Integrale");
+		chartframe.addToLineChartPane(cDeri);
+		chartframe.addToLineChartPane(cInte);
 		while(t <= tf) {
 			System.out.printf("____________________________________________________________________________________________________"
 					+ "\n____________________________________________________________________________________________________"
 					+ "\nt=%.1f\n", t);
-			cS.addDataToSeries(t, (double)components.get(4).getValue());
+			cDeri.addDataToSeries(t, (double)components.get(4).getValue());
+			cInte.addDataToSeries(t, (double)components.get(5).getValue());
 			getTr_min(show);
 			updateImms();
 			stepTime();
@@ -81,7 +95,7 @@ public class Scheduler {
 			lambdaCalls(show);
 			updateIns();
 			refresh(show);
-			//clearInputs();
+			clearInputs();
 		}
 	}
 	
@@ -153,7 +167,7 @@ public class Scheduler {
 			System.out.println("___tr_min loop___");
 		for(Component comp : components) {
 			if(show) {
-				System.out.printf("%s(%d)\ttr=%.1f",comp.getName(), comp.getCurrent_state(), comp.getTr());
+				System.out.printf("%s(%d)\ttr=%f",comp.getName(), comp.getCurrent_state(), comp.getTr());
 				System.out.printf("  \te=%.1f   \ttl=%.1f  \ttn=%.1f", comp.getE(), comp.getTl(), comp.getTn());
 				System.out.println("");
 			}
