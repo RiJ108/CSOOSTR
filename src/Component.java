@@ -78,7 +78,7 @@ public abstract class Component {
 	abstract public boolean internal(boolean show);
 	abstract public void lambda(boolean show);
 	abstract public double ta();
-	abstract public int getQ();
+	abstract public Object getValue();
 	
 	public void init() {
 		inputs = new ArrayList<Port>();

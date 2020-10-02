@@ -1,19 +1,40 @@
+import java.util.ArrayList;
 
-public class Processor extends Component{
+public class Adder extends Component{
 	
-	public Processor() {
-		init();
+	private double sum;
+	private ArrayList<Double> values;
+	
+	public double getSum() {
+		return sum;
 	}
-	public Processor(String name) {
+
+	public void setSum(double sum) {
+		this.sum = sum;
+	}
+
+	public Adder() {
+		init();
+		values = new ArrayList<Double>();
+	}
+	
+	public Adder(String name) {
 		init();
 		setName(name);
+		values = new ArrayList<Double>();
+	}
+	
+	@Override
+	public void addInput(Port input) {
+		super.addInput(input);
+		values.add(0.0);
 	}
 
 	@Override
 	public boolean external(boolean show) {
 		// TODO Auto-generated method stub
-		int current_state = getCurrent_state();
-		if(current_state == 0 && getInputs().get(0).getValue() != null) {
+		switch(getCurrent_state()) {
+		case 0:
 			isSwitched(true);
 			setNext_state(1);
 		}
@@ -36,7 +57,21 @@ public class Processor extends Component{
 		// TODO Auto-generated method stub
 		switch(getCurrent_state()) {
 		case 1:
-			getOutputs().get(0).setValue(true, show);
+			sumupInputs();
+			break;
+		}
+	}
+	
+	public void sumupInputs() {
+		System.out.println("SUMUP function****");
+		double sum = 0.0;
+		for(Port in : getInputs()) {
+			sum += (double)in.getValue();
+		}
+		this.sum = sum;
+		
+		for(Double value : values) {
+			System.out.println(value);
 		}
 	}
 
@@ -47,7 +82,7 @@ public class Processor extends Component{
 		case 0:
 			return Double.POSITIVE_INFINITY;
 		case 1:
-			return 3.0;
+			return 0.0;
 		}
 		return 0;
 	}
@@ -55,7 +90,7 @@ public class Processor extends Component{
 	@Override
 	public Object getValue() {
 		// TODO Auto-generated method stub
-		return 0;
+		return sum;
 	}
 
 }

@@ -12,10 +12,10 @@ public class Buffer extends Component{
 		setName(name);
 	}
 	
-	public int getQ() {
+	public Object getValue() {
 		return q;
 	}
-	public void setQ(int q) {
+	public void setValue(int q) {
 		this.q = q;
 	}
 

@@ -47,7 +47,7 @@ public class Generator extends Component{
 	}
 
 	@Override
-	public int getQ() {
+	public Object getValue() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
