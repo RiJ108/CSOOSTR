@@ -13,7 +13,7 @@ public class Scheduler {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//exo_1();
-		//exo_2();
+		exo_2();
 		//exo_3();
 		//exo_4();
 	}
