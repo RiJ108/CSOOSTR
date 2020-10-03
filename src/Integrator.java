@@ -1,29 +1,40 @@
 
 public class Integrator extends Component{
-	
+	private double value;
 	private double step;
 	private double delta;
-	private double value;
 	private double deri;
 	
 	public Integrator() {
 		init();
-	}
-	
-	public Integrator(double step) {
-		init();
-		setStep(step);
-	}
-	
-	public Integrator(String name, double step) {
-		init();
-		setStep(step);
-		setName(name);
+		setName("Integrator");
+		setStep(0.1);
+		setCI(0.0);
+		setDeri(0.0);
 	}
 	
 	public Integrator(String name) {
 		init();
 		setName(name);
+		setStep(0.1);
+		setCI(0.0);
+		setDeri(0.0);
+	}
+	
+	public Integrator(String name, double step) {
+		init();
+		setName(name);
+		setStep(step);
+		setCI(0.0);
+		setDeri(0.0);
+	}
+	
+	public Integrator(double step) {
+		init();
+		setName("Integrator");
+		setStep(step);
+		setCI(0.0);
+		setDeri(0.0);
 	}
 	
 	public double getDeri() {
@@ -50,19 +61,23 @@ public class Integrator extends Component{
 		this.step = step;
 	}
 	
-	public void integrate() {
-		System.out.println("Integrate function***");
-		System.out.println(getDeri());
+	public void integrate(boolean show) {
+		if(show) {
+			System.out.println("Integrate function***");
+			System.out.println(getDeri() + "\t" + getDelta());
+		}
 		setValue((double)getValue() + getDelta()*getDeri());
 	}
 
 	@Override
 	public boolean external(boolean show) {
 		// TODO Auto-generated method stub
+		if(show)
+			System.out.println("External " + getName());
+		setDeri((double)getInputs().get(0).getValue());
 		switch(getCurrent_state()) {
 		case 0:
 			setDelta(getE());
-			setDeri((double)getInputs().get(0).getValue());
 			isSwitched(true);
 			setNext_state(1);
 		}
@@ -79,7 +94,7 @@ public class Integrator extends Component{
 			setNext_state(1);
 			break;
 		case 1:
-			integrate();
+			integrate(show);
 			isSwitched(true);
 			setNext_state(0);
 			break;
@@ -90,7 +105,12 @@ public class Integrator extends Component{
 	@Override
 	public void lambda(boolean show) {
 		// TODO Auto-generated method stub
-
+		switch(getCurrent_state()) {
+		case 1:
+			if(getOutputs().size() != 0) {
+				getOutputs().get(0).setValue(value, show);
+			}
+		}
 	}
 
 	@Override

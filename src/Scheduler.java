@@ -7,21 +7,156 @@ public class Scheduler {
 	private static double t;
 	private static double tf;
 	private static double tr_min;
-	private static ArrayList<Component> components = new ArrayList<Component>();
+	private static ArrayList<Component> components;
 	private static ArrayList<Component> imms;
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//exo_1();
-		exo_2();
+		//exo_2();
+		//exo_3();
+		//exo_4();
+	}
+	
+	public static void exo_4() {
+		components = new ArrayList<Component>();
+		init_exo_4();
+		run_exo_4(false);
+	}
+	
+	public static void init_exo_4() {
+		double step = 0.001;
+		
+		Output x_o0 = new Output("Bouncer_x(out)");
+		Input x_i0 = new Input("Integrator_0_x(in)", x_o0);
+		
+		Output px_o0 = new Output("Integrator_0_px(out)");
+		Input px_i0 = new Input("Integrator_1_px(in)", px_o0);
+		
+		Output p2x_o0 = new Output("Integrator_1_p²x(out)");
+		Input p2x_i0 = new Input("Bouncer_p²x(in)", p2x_o0);
+		
+		Bouncer bouncer = new Bouncer(-10);
+		bouncer.addOutput(x_o0);
+		bouncer.addInput(p2x_i0);
+		bouncer.setReduction(0.5);
+		
+		Integrator integrator_0 = new Integrator("Integrator_0", step);
+		bouncer.setIntegrator(integrator_0);
+		integrator_0.addInput(x_i0);
+		integrator_0.addOutput(px_o0);
+		
+		Integrator integrator_1 = new Integrator("Integrator_1", step);
+		integrator_1.addInput(px_i0);
+		integrator_1.addOutput(p2x_o0);
+		integrator_1.setCI(100.0);
+		
+		components.add(bouncer);
+		components.add(integrator_0);
+		components.add(integrator_1);
+		
+		tf = 4.75;
+	}
+	
+	public static void run_exo_4(boolean show) {
+		ChartFrame chartframe_4 = new ChartFrame("Resultat Exercie 4", "Bouncer > Integrator >\\< Integrator");
+		Chart x = new Chart("X");
+		Chart px = new Chart("pX");
+		Chart p2x = new Chart("p²X");
+		chartframe_4.addToLineChartPane(x);
+		chartframe_4.addToLineChartPane(px);
+		chartframe_4.addToLineChartPane(p2x);
+		while(t <= tf) {
+			System.out.printf("____________________________________________________________________________________________________"
+					+ "\n____________________________________________________________________________________________________"
+					+ "\nt=%.1f\n", t);
+			x.addDataToSeries(t, (double)components.get(0).getValue());
+			px.addDataToSeries(t, (double)components.get(1).getValue());
+			p2x.addDataToSeries(t, (double)components.get(2).getValue());
+			getTr_min(show);
+			updateImms();
+			stepTime();
+			updateOuts();
+			showOuts();
+			updateE();
+			updateTr();
+			lambdaCalls(show);
+			updateIns();
+			refresh(show);
+			clearInputs();
+		}
+	}
+	
+	public static void exo_3() {
+		components = new ArrayList<Component>();
+		init_exo_3();
+		run_exo_3(false);
+	}
+	
+	public static void init_exo_3() {
+		double step = 0.001;
+		
+		Output x_o0 = new Output("Constante_x(out)");
+		Input x_i0 = new Input("Integrator_0_x(in)", x_o0);
+		
+		Output px_o0 = new Output("Integrator_0_px(out)");
+		Input px_i0 = new Input("Integrator_1_px(in)", px_o0);
+		
+		Constante constante = new Constante(-9.81);
+		constante.addOutput(x_o0);
+		
+		Integrator integrator_0 = new Integrator("Integrator_0", step);
+		integrator_0.addInput(x_i0);
+		integrator_0.addOutput(px_o0);
+		
+		Integrator integrator_1 = new Integrator("Integrator_1", step);
+		integrator_1.addInput(px_i0);
+		
+		components.add(constante);
+		components.add(integrator_0);
+		components.add(integrator_1);
+		
+		tf = 10.0;
+	}
+	
+	public static void run_exo_3(boolean show) {
+		ChartFrame chartframe_3 = new ChartFrame("Resultat Exercie 3", "Constante > Integrator > Integrator");
+		Chart x = new Chart("X");
+		Chart px = new Chart("pX");
+		Chart p2x = new Chart("p²X");
+		chartframe_3.addToLineChartPane(x);
+		chartframe_3.addToLineChartPane(px);
+		chartframe_3.addToLineChartPane(p2x);
+		while(t <= tf) {
+			System.out.printf("____________________________________________________________________________________________________"
+					+ "\n____________________________________________________________________________________________________"
+					+ "\nt=%.1f\n", t);
+			x.addDataToSeries(t, (double)components.get(0).getValue());
+			px.addDataToSeries(t, (double)components.get(1).getValue());
+			p2x.addDataToSeries(t, (double)components.get(2).getValue());
+			getTr_min(show);
+			updateImms();
+			stepTime();
+			updateOuts();
+			showOuts();
+			updateE();
+			updateTr();
+			lambdaCalls(show);
+			updateIns();
+			refresh(show);
+			clearInputs();
+		}
 	}
 	
 	public static void exo_2() {
+		components = new ArrayList<Component>();
 		init_exo_2();
-		run_exo_2(true);
+		run_exo_2(false);
 	}
 	
 	public static void init_exo_2() {
+		double step = 0.001;
+		
 		Output y_o0 = new Output("Stepper_0_y(out)");
 		Input y_i0 = new Input("Adder_y0(in)", y_o0);
 		
@@ -35,7 +170,10 @@ public class Scheduler {
 		Input y_i3 = new Input("Adder_y3(in)", y_o3);
 		
 		Output s_o0 = new Output("Adder_i0(out)");
-		Input s_i0 = new Input("Integrator_s0(in)", s_o0);
+		Input s_i0 = new Input("Integrator_0_s0(in)", s_o0);
+		
+		Output sp_o0 = new Output("Integrator_0_s0(out)");
+		Input sp_i0 = new Input("Integrator_1_s0(in)", sp_o0);
 		
 		Stepper stepper_0 = new Stepper("Stepper_0", 1.0, -3.0, 0.65);
 		stepper_0.addOutput(y_o0);
@@ -49,45 +187,49 @@ public class Scheduler {
 		Stepper stepper_3 = new Stepper("Stepper_3", 0.0, 4.0, 1.5);
 		stepper_3.addOutput(y_o3);
 		
-		Adder adder = new Adder("Adder");
+		Adder adder = new Adder();
 		adder.addInput(y_i0);
 		adder.addInput(y_i1);
 		adder.addInput(y_i2);
 		adder.addInput(y_i3);
 		adder.addOutput(s_o0);
 		
-		Integrator integrator = new Integrator("Integrator", 0.001);
-		integrator.setTr(integrator.ta());
-		integrator.setCI(0.0);
-		integrator.setDeri(0.0);
-		integrator.addInput(s_i0);
+		Integrator integrator_0 = new Integrator(step);
+		integrator_0.addInput(s_i0);
+		integrator_0.addOutput(sp_o0);
+		
+		Integrator integrator_1 = new Integrator(step);
+		integrator_1.addInput(sp_i0);
 		
 		components.add(stepper_0);
 		components.add(stepper_1);
 		components.add(stepper_2);
 		components.add(stepper_3);
 		components.add(adder);
-		components.add(integrator);
+		components.add(integrator_0);
+		components.add(integrator_1);
 		
 		tf= 5.0;
 	}
 	
 	public static void run_exo_2(boolean show) {
-		ChartFrame chartframe = new ChartFrame("Resultat", "Stepper Adder");
+		ChartFrame chartframe_2 = new ChartFrame("Resultat Exercice 2", "Stepper > Adder > Integrator > Integrator");
 		Chart cDeri = new Chart("Derivate");
 		Chart cInte = new Chart("Integrale");
-		chartframe.addToLineChartPane(cDeri);
-		chartframe.addToLineChartPane(cInte);
+		Chart cInte2 = new Chart("Integrale²");
+		chartframe_2.addToLineChartPane(cDeri);
+		chartframe_2.addToLineChartPane(cInte);
+		chartframe_2.addToLineChartPane(cInte2);
 		while(t <= tf) {
 			System.out.printf("____________________________________________________________________________________________________"
 					+ "\n____________________________________________________________________________________________________"
 					+ "\nt=%.1f\n", t);
 			cDeri.addDataToSeries(t, (double)components.get(4).getValue());
 			cInte.addDataToSeries(t, (double)components.get(5).getValue());
+			cInte2.addDataToSeries(t, (double)components.get(6).getValue());
 			getTr_min(show);
 			updateImms();
 			stepTime();
-			showBufferQ();
 			updateOuts();
 			showOuts();
 			updateE();
@@ -100,6 +242,7 @@ public class Scheduler {
 	}
 	
 	public static void exo_1() {
+		components = new ArrayList<Component>();
 		init_exo_1();
 		run_exo_1(false);
 	}
@@ -114,15 +257,15 @@ public class Scheduler {
 		Output done_o0 = new Output("Proc_done(out)", 1);
 		Input done_i0 = new Input("Buf_done(in)", done_o0);
 		
-		Generator generator = new Generator("Generator");
+		Generator generator = new Generator();
 		generator.addOutput(job_o0);
 		
-		Buffer buffer = new Buffer("Buffer");
+		Buffer buffer = new Buffer();
 		buffer.addInput(job_i0);
 		buffer.addInput(done_i0);
 		buffer.addOutput(req_o0);
 		
-		Processor processor = new Processor("Processor");
+		Processor processor = new Processor();
 		processor.addInput(req_i0);
 		processor.addOutput(done_o0);
 		
@@ -134,9 +277,9 @@ public class Scheduler {
 	}
 	
 	public static void run_exo_1(boolean show) {
-		ChartFrame chartframe = new ChartFrame("Resultat", "GenBufProc");
+		ChartFrame chartframe_1 = new ChartFrame("Resultat Exercice 1", "Generator > Buffer >< Processor");
 		Chart cQ = new Chart("q");
-		chartframe.addToLineChartPane(cQ);
+		chartframe_1.addToLineChartPane(cQ);
 		while(t <= tf) {
 			System.out.printf("____________________________________________________________________________________________________"
 					+ "\n____________________________________________________________________________________________________"
@@ -145,7 +288,6 @@ public class Scheduler {
 			getTr_min(show);
 			updateImms();
 			stepTime();
-			showBufferQ();
 			updateOuts();
 			showOuts();
 			updateE();

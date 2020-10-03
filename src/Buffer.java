@@ -5,8 +5,9 @@ public class Buffer extends Component{
 	
 	public Buffer() {
 		init();
-
+		setName("Buffer");
 	}
+	
 	public Buffer(String name) {
 		init();
 		setName(name);

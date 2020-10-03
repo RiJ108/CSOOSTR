@@ -9,6 +9,7 @@ import table.TableModelChart;
  * Classe Chart
  *
  */
+@SuppressWarnings("deprecation")
 public class Chart extends Observable {
 
 	private String name;

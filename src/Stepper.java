@@ -7,16 +7,18 @@ public class Stepper extends Component{
 	
 	public Stepper() {
 		init();
-		Xi = 0.0;
-		Xf = 0.0;
-		ts = 0.0;
+		setName("Stepper");
+		setXi(0.0);
+		setXf(0.0);
+		setTs(0.0);
 	}
 	
-	public Stepper(double Xi, double Xf, double ts) {
+	public Stepper(String name) {
 		init();
-		setXi(Xi);
-		setXf(Xf);
-		setTs(ts);
+		setName(name);
+		setXi(0.0);
+		setXf(0.0);
+		setTs(0.0);
 	}
 	
 	public Stepper(String name, double Xi, double Xf, double ts) {
@@ -27,9 +29,12 @@ public class Stepper extends Component{
 		setTs(ts);
 	}
 	
-	public Stepper(String name) {
+	public Stepper(double Xi, double Xf, double ts) {
 		init();
-		setName(name);
+		setName("Stepper");
+		setXi(Xi);
+		setXf(Xf);
+		setTs(ts);
 	}
 	
 	public double getXi() {
@@ -109,7 +114,7 @@ public class Stepper extends Component{
 	@Override
 	public Object getValue() {
 		// TODO Auto-generated method stub
-		return 0;
+		return Xf;
 	}
 
 }

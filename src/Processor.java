@@ -3,6 +3,7 @@ public class Processor extends Component{
 	
 	public Processor() {
 		init();
+		setName("Processor");
 	}
 	public Processor(String name) {
 		init();

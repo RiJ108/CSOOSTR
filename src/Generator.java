@@ -4,6 +4,7 @@ public class Generator extends Component{
 	
 	public Generator() {
 		init();
+		setName("Generator");
 	}
 	public Generator(String name) {
 		init();

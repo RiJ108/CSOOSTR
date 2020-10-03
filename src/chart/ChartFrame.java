@@ -101,6 +101,7 @@ public class ChartFrame extends JFrame {
 	 * Cette méthode permet d'ajouter une courbe au panneau d'affichage des courbes et au modèle de table de choix des courbes à afficher
 	 * @param c la courbe de type Chart
 	 */
+	@SuppressWarnings("deprecation")
 	public void addToLineChartPane(Chart c){
 		c.addObserver(chartPane);
 		choiceTableModel.addChart(c);

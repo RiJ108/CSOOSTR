@@ -6,6 +6,7 @@ public class Output extends Port{
 	
 	public Output() {
 		init();
+		setName("out");
 	}
 	public Output(String name) {
 		init();

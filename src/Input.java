@@ -3,6 +3,7 @@
 public class Input extends Port{
 	Input(){
 		init();
+		setName("in");
 	}
 	
 	Input(String name){

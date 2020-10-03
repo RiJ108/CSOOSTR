@@ -30,6 +30,7 @@ import table.TableModelChart;
  * Classe LineChartPane
  *
  */
+@SuppressWarnings("deprecation")
 public class LineChartPane extends JSplitPane implements ActionListener, Observer{
 
 	private static final long serialVersionUID = 1L;

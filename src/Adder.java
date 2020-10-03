@@ -15,6 +15,7 @@ public class Adder extends Component{
 
 	public Adder() {
 		init();
+		setName("Adder");
 		values = new ArrayList<Double>();
 	}
 	
