@@ -4,6 +4,7 @@ public class Integrator_ED extends Component{
 	private double dT;
 	private double q;
 	private double deri;
+	private double hold;
 	
 	public Integrator_ED() {
 		init();
@@ -57,6 +58,14 @@ public class Integrator_ED extends Component{
 		this.dT = dT;
 	}
 	
+	public double getHold() {
+		return hold;
+	}
+
+	public void setHold(double hold) {
+		this.hold = hold;
+	}
+
 	public void integrate(double delta) {
 		setValue((double)getValue() + delta);
 	}
@@ -79,10 +88,11 @@ public class Integrator_ED extends Component{
 	@Override
 	public boolean external(boolean show) {
 		// TODO Auto-generated method stub
+		setHold((double)getInputs().get(0).getValue());
 		switch(getCurrent_state()) {
 		case 0:
-			setDeri((double)getInputs().get(0).getValue());
 			integrate(getDeri() * getE());
+			setDeri(getHold());
 			compute_dT();
 			isSwitched(true);
 			setNext_state(0);
@@ -97,7 +107,6 @@ public class Integrator_ED extends Component{
 		switch(getCurrent_state()) {
 		case 0:
 			integrate(getdQ() * Math.signum(getDeri()));
-			compute_dT();
 			isSwitched(true);
 			setNext_state(0);
 			break;

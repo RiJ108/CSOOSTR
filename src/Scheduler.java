@@ -16,8 +16,8 @@ public class Scheduler {
 		//exo_1();
 		//exo_2();
 		//exo_2b();
-		exo_3();
-		//exo_4();
+		//exo_3();
+		exo_4();
 	}
 	
 	public static void exo_4() {
@@ -27,7 +27,7 @@ public class Scheduler {
 	}
 	
 	public static void init_exo_4() {
-		double step = 0.01;
+		double step = 0.1;
 		
 		Output x_o0 = new Output("Bouncer_x(out)");
 		Input x_i0 = new Input("Integrator_0_x(in)", x_o0);
@@ -37,6 +37,26 @@ public class Scheduler {
 		
 		Output p2x_o0 = new Output("Integrator_1_p�x(out)");
 		Input p2x_i0 = new Input("Bouncer_p�x(in)", p2x_o0);
+		
+		Integrator_ED integrator_0 = new Integrator_ED("Integrator_0", step);
+		integrator_0.addInput(x_i0);
+		integrator_0.addOutput(px_o0);
+		
+		Integrator_ED integrator_1 = new Integrator_ED("Integrator_1", step);
+		integrator_1.setValue(10.0);
+		integrator_1.addInput(px_i0);
+		integrator_1.addOutput(p2x_o0);
+		
+		Bouncer bouncer = new Bouncer(-9.81);
+		bouncer.addInput(p2x_i0);
+		bouncer.addOutput(x_o0);
+		bouncer.setIntegrator(integrator_0);
+		bouncer.setReduction(0.8);
+		bouncer.isFlag(true);
+		
+		components.add(bouncer);
+		components.add(integrator_0);
+		components.add(integrator_1);
 	}
 	
 	public static void run_exo_4(boolean show) {
@@ -51,9 +71,9 @@ public class Scheduler {
 			System.out.printf("____________________________________________________________________________________________________"
 					+ "\n____________________________________________________________________________________________________"
 					+ "\nt=%.1f\n", t);
-			/*x.addDataToSeries(t, (double)components.get(0).getValue());
+			x.addDataToSeries(t, (double)components.get(0).getValue());
 			px.addDataToSeries(t, (double)components.get(1).getValue());
-			p2x.addDataToSeries(t, (double)components.get(2).getValue());*/
+			p2x.addDataToSeries(t, (double)components.get(2).getValue());
 			getTr_min(show);
 			updateImms();
 			stepTime();
