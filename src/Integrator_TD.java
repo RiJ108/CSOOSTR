@@ -1,11 +1,11 @@
 
-public class Integrator extends Component{
+public class Integrator_TD extends Component{
 	private double value;
 	private double step;
 	private double delta;
 	private double deri;
 	
-	public Integrator() {
+	public Integrator_TD() {
 		init();
 		setName("Integrator");
 		setStep(0.1);
@@ -13,7 +13,7 @@ public class Integrator extends Component{
 		setDeri(0.0);
 	}
 	
-	public Integrator(String name) {
+	public Integrator_TD(String name) {
 		init();
 		setName(name);
 		setStep(0.1);
@@ -21,7 +21,7 @@ public class Integrator extends Component{
 		setDeri(0.0);
 	}
 	
-	public Integrator(String name, double step) {
+	public Integrator_TD(String name, double step) {
 		init();
 		setName(name);
 		setStep(step);
@@ -29,7 +29,7 @@ public class Integrator extends Component{
 		setDeri(0.0);
 	}
 	
-	public Integrator(double step) {
+	public Integrator_TD(double step) {
 		init();
 		setName("Integrator");
 		setStep(step);
