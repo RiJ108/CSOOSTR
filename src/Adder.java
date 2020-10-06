@@ -30,22 +30,18 @@ public class Adder extends Component{
 	}
 	
 	public void hold() {
-		System.out.println("Hold function****");
 		int index = 0;
 		for(Port in : getInputs()) {
-			if(in.getValue() != null) {
+			if(in.getValue() != null)
 				getValues().set(index, (double)in.getValue());
-			}
 			index++;
 		}
 	}
 	
 	public void sumupInputs() {
-		System.out.println("SUMUP function****");	
 		sum = 0.0;
-		for(Double value : values) {
+		for(Double value : values)
 			sum += value;
-		}
 	}
 	
 	@Override

@@ -56,14 +56,17 @@ public class Bouncer extends Component{
 	@Override
 	public boolean external(boolean show) {
 		// TODO Auto-generated method stub
-		System.out.println(getName() + " EXTERNAL()");
-		if((double)getInputs().get(0).getValue() <= 0.0 && isFlag()) {
-			integrator.setValue(-(double)integrator.getValue() * getReduction());
-			isFlag(false);
-		}else if((double)getInputs().get(0).getValue() > 0.0 && !isFlag()) {
-			isFlag(true);
+		if(isFlag()) {
+			if((double)getInputs().get(0).getValue() <= 0.0) {
+				isFlag(false);
+				integrator.setValue(-(double)integrator.getValue() * getReduction());
+			}
+		}else {
+			if((double)getInputs().get(0).getValue() > 0.0) {
+				isFlag(true);
+			}
 		}
-		return swapState(show);
+		return false;
 	}
 
 	@Override

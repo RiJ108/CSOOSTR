@@ -41,7 +41,8 @@ public class Output extends Port{
 		for(Input link : links) {
 			link.setValue(value, show);
 		}
-		System.out.println("");
+		if(show)
+			System.out.println("");
 	}
 	public int getForState() {
 		return forState;
