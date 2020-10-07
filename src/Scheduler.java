@@ -24,7 +24,7 @@ public class Scheduler {
 		components = new ArrayList<Component>();
 		tf = 40.0;
 		init_exo_4();
-		run_exo_4(false);
+		run_exo_4();
 	}
 	
 	public static void init_exo_4() {
@@ -49,19 +49,17 @@ public class Scheduler {
 		integrator_1.addInput(px_i0);
 		integrator_1.addOutput(p2x_o0);
 		
-		Bouncer bouncer = new Bouncer(-9.81);
+		Bouncer bouncer = new Bouncer(-9.81, 0.8);
 		bouncer.addInput(p2x_i0);
 		bouncer.addOutput(x_o0);
 		bouncer.setIntegrator(integrator_0);
-		bouncer.setReduction(0.8);
-		bouncer.isFlag(true);
 		
 		components.add(bouncer);
 		components.add(integrator_0);
 		components.add(integrator_1);
 	}
 	
-	public static void run_exo_4(boolean show) {
+	public static void run_exo_4() {
 		ChartFrame chartframe_4 = new ChartFrame("Resultat Exercie 4", "Bouncer > Integrator >\\< Integrator");
 		Chart ground = new Chart("Ground");
 		Chart x = new Chart("X(Accelaration)");
@@ -72,29 +70,26 @@ public class Scheduler {
 		chartframe_4.addToLineChartPane(px);
 		chartframe_4.addToLineChartPane(p2x);
 		while(t <= tf) {
-			if(show)
-				System.out.printf("____________________________________________________________________________________________________"
-					+ "\n____________________________________________________________________________________________________"
-					+ "\nt=%.4f\n", t);
 			ground.addDataToSeries(t, 0.0);
 			x.addDataToSeries(t, (double)components.get(0).getValue());
 			px.addDataToSeries(t, (double)components.get(1).getValue());
 			p2x.addDataToSeries(t, (double)components.get(2).getValue());
-			getTr_min(show);
+			getTr_min();
 			updateImms();
 			stepTime();
 			updateOuts();
 			updateE();
 			updateTr();
-			lambdaCalls(show);
+			lambdaCalls();
 			updateIns();
-			refresh(show);
+			refresh();
 			clearInputs();
 		}
 	}
 	
 	public static void exo_3() {
 		components = new ArrayList<Component>();
+		tf = 3.5;
 		init_exo_3();
 		run_exo_3(false);
 	}
@@ -132,22 +127,18 @@ public class Scheduler {
 		chartframe_3.addToLineChartPane(px);
 		chartframe_3.addToLineChartPane(p2x);
 		while(t <= tf) {
-			if(show)
-				System.out.printf("____________________________________________________________________________________________________"
-					+ "\n____________________________________________________________________________________________________"
-					+ "\nt=%.1f\n", t);
 			x.addDataToSeries(t, (double)components.get(0).getValue());
 			px.addDataToSeries(t, (double)components.get(1).getValue());
 			p2x.addDataToSeries(t, (double)components.get(2).getValue());
-			getTr_min(show);
+			getTr_min();
 			updateImms();
 			stepTime();
 			updateOuts();
 			updateE();
 			updateTr();
-			lambdaCalls(show);
+			lambdaCalls();
 			updateIns();
-			refresh(show);
+			refresh();
 			clearInputs();
 		}
 	}
@@ -200,8 +191,6 @@ public class Scheduler {
 		adder.addOutput(s_o0);
 		
 		Integrator_ED integrator_0b = new Integrator_ED("Integrator_0", step);
-		//integrator_0b.setDeri(1.0);
-		integrator_0b.compute_dT();
 		integrator_0b.addInput(s_i0);
 		integrator_0b.addOutput(sp_o0);
 		
@@ -226,22 +215,18 @@ public class Scheduler {
 		chartframe_2b.addToLineChartPane(cInte);
 		chartframe_2b.addToLineChartPane(cInte2);
 		while(t <= tf) {
-			if(show)
-				System.out.printf("____________________________________________________________________________________________________"
-					+ "\n____________________________________________________________________________________________________"
-					+ "\nt=%f\n", t);
 			cDeri.addDataToSeries(t, (double)components.get(4).getValue());
 			cInte.addDataToSeries(t, (double)components.get(5).getValue());
 			cInte2.addDataToSeries(t, (double)components.get(6).getValue());
-			getTr_min(show);
+			getTr_min();
 			updateImms();
 			stepTime();
 			updateOuts();
 			updateE();
 			updateTr();
-			lambdaCalls(show);
+			lambdaCalls();
 			updateIns();
-			refresh(show);
+			refresh();
 			clearInputs();
 		}
 	}
@@ -318,22 +303,18 @@ public class Scheduler {
 		chartframe_2.addToLineChartPane(cInte);
 		chartframe_2.addToLineChartPane(cInte2);
 		while(t <= tf) {
-			if(show)
-				System.out.printf("____________________________________________________________________________________________________"
-					+ "\n____________________________________________________________________________________________________"
-					+ "\nt=%.1f\n", t);
 			cDeri.addDataToSeries(t, (double)components.get(4).getValue());
 			cInte.addDataToSeries(t, (double)components.get(5).getValue());
 			cInte2.addDataToSeries(t, (double)components.get(6).getValue());
-			getTr_min(show);
+			getTr_min();
 			updateImms();
 			stepTime();
 			updateOuts();
 			updateE();
 			updateTr();
-			lambdaCalls(show);
+			lambdaCalls();
 			updateIns();
-			refresh(show);
+			refresh();
 			clearInputs();
 		}
 	}
@@ -377,20 +358,16 @@ public class Scheduler {
 		Chart cQ = new Chart("q");
 		chartframe_1.addToLineChartPane(cQ);
 		while(t <= tf) {
-			if(show)
-				System.out.printf("____________________________________________________________________________________________________"
-					+ "\n____________________________________________________________________________________________________"
-					+ "\nt=%.1f\n", t);
 			cQ.addDataToSeries(t, (int)components.get(1).getValue());
-			getTr_min(show);
+			getTr_min();
 			updateImms();
 			stepTime();
 			updateOuts();
 			updateE();
 			updateTr();
-			lambdaCalls(show);
+			lambdaCalls();
 			updateIns();
-			refresh(show);
+			refresh();
 			clearInputs();
 		}
 	}
@@ -399,7 +376,7 @@ public class Scheduler {
 		t += tr_min;
 	}
 	
-	public static void getTr_min(boolean show) {
+	public static void getTr_min() {
 		tr_min = Double.POSITIVE_INFINITY;
 		for(Component comp : components) {
 			if(comp.getTr() < tr_min)
@@ -430,10 +407,10 @@ public class Scheduler {
 			comp.setTr(comp.getTr() - tr_min);
 	}
 	
-	public static void lambdaCalls(boolean show) {
+	public static void lambdaCalls() {
 		if(imms != null) {
 			for(Component comp : imms)
-				comp.lambda(show);
+				comp.lambda();
 		}
 	}
 	
@@ -447,18 +424,18 @@ public class Scheduler {
 			comp.setOuts();
 	}
 	
-	public static void refresh(boolean show) {
+	public static void refresh() {
 		if(imms != null) {
 			for(Component comp : components) {
 				if(imms.contains(comp) && comp.getIns() == null) {
-					comp.internal(show);
+					comp.internal();
 					comp.updateTimers(t);
 				}else if(!imms.contains(comp) && comp.getIns() != null) {
-					comp.external(show);
+					comp.external();
 					comp.updateTimers(t);
 				}else if(imms.contains(comp) && comp.getIns() != null) {
-					if(!comp.external(show))
-						comp.internal(show);
+					if(!comp.external())
+						comp.internal();
 					comp.updateTimers(t);
 				}
 			}
@@ -469,9 +446,8 @@ public class Scheduler {
 		System.out.println("\n___Next event(s)___");
 		for(Component comp : components) {
 			if(comp.getOuts() != null) {
-				for(Port out : comp.getOuts()) {
+				for(Port out : comp.getOuts())
 					System.out.printf("%s|%.1f\t", out.getName(), comp.getTr());
-				}
 				System.out.println("");
 			}
 		}

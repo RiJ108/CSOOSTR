@@ -5,7 +5,7 @@ public abstract class Port {
 	protected Object value;
 	
 	abstract public void init();
-	abstract public void setValue(Object value, boolean show);
+	abstract public void setValue(Object value);
 	abstract public int getForState();
 	
 	public String getName() {

@@ -86,7 +86,7 @@ public class Integrator_ED extends Component{
 	}
 
 	@Override
-	public boolean external(boolean show) {
+	public boolean external() {
 		// TODO Auto-generated method stub
 		setHold((double)getInputs().get(0).getValue());
 		switch(getCurrent_state()) {
@@ -98,11 +98,11 @@ public class Integrator_ED extends Component{
 			setNext_state(0);
 			break;
 		}
-		return swapState(show);
+		return swapState();
 	}
 
 	@Override
-	public boolean internal(boolean show) {
+	public boolean internal() {
 		// TODO Auto-generated method stub
 		switch(getCurrent_state()) {
 		case 0:
@@ -111,14 +111,14 @@ public class Integrator_ED extends Component{
 			setNext_state(0);
 			break;
 		}
-		return swapState(show);
+		return swapState();
 	}
 
 	@Override
-	public void lambda(boolean show) {
+	public void lambda() {
 		// TODO Auto-generated method stub
 		if(getOutputs().size() != 0)
-			getOutputs().get(0).setValue(q, show);
+			getOutputs().get(0).setValue(q);
 	}
 
 	@Override

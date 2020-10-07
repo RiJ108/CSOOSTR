@@ -26,12 +26,8 @@ public class Input extends Port{
 		this.value = null;
 	}
 	
-	public void setValue(Object value, boolean show) {
+	public void setValue(Object value) {
 		this.value = value;
-		if(show) {
-			System.out.printf("  %s to ", getName());
-			System.out.print(value);
-		}
 	}
 
 	@Override

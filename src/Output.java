@@ -32,17 +32,10 @@ public class Output extends Port{
 	public void addLink(Input link) {
 		links.add(link);
 	}
-	public void setValue(Object value, boolean show) {
+	public void setValue(Object value) {
 		this.value = value;
-		if(show) {
-			System.out.printf("%s to ", getName());
-			System.out.println(value);
-		}
-		for(Input link : links) {
-			link.setValue(value, show);
-		}
-		if(show)
-			System.out.println("");
+		for(Input link : links)
+			link.setValue(value);
 	}
 	public int getForState() {
 		return forState;

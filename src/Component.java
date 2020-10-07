@@ -74,9 +74,9 @@ public abstract class Component {
 	public void isSwitched(boolean switched) {
 		this.switched = switched;
 	}
-	abstract public boolean external(boolean show);
-	abstract public boolean internal(boolean show);
-	abstract public void lambda(boolean show);
+	abstract public boolean external();
+	abstract public boolean internal();
+	abstract public void lambda();
 	abstract public double ta();
 	abstract public Object getValue();
 	
@@ -88,10 +88,8 @@ public abstract class Component {
 		isSwitched(false);
 	}
 	
-	public boolean swapState(boolean show) {
+	public boolean swapState() {
 		if(isSwitched()) {
-			if(show)
-				System.out.printf("  %s switch from %d to %d\n", getName(), current_state, next_state);
 			current_state = next_state;
 			return true;
 		}
@@ -139,7 +137,7 @@ public abstract class Component {
 	
 	public void clearInputs() {
 		for(Port in : inputs) {
-			in.setValue(null, false);
+			in.setValue(null);
 		}
 	}
 	

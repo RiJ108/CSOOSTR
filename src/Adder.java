@@ -51,7 +51,7 @@ public class Adder extends Component{
 	}
 
 	@Override
-	public boolean external(boolean show) {
+	public boolean external() {
 		// TODO Auto-generated method stub
 		switch(getCurrent_state()) {
 		case 0:
@@ -59,27 +59,27 @@ public class Adder extends Component{
 			hold();
 			setNext_state(1);
 		}
-		return swapState(show);
+		return swapState();
 	}
 
 	@Override
-	public boolean internal(boolean show) {
+	public boolean internal() {
 		// TODO Auto-generated method stub
 		switch(getCurrent_state()) {
 		case 1:
 			isSwitched(true);
 			setNext_state(0);
 		}
-		return swapState(show);
+		return swapState();
 	}
 
 	@Override
-	public void lambda(boolean show) {
+	public void lambda() {
 		// TODO Auto-generated method stub
 		switch(getCurrent_state()) {
 		case 1:
 			sumupInputs();
-			getOutputs().get(0).setValue(getValue(), show);
+			getOutputs().get(0).setValue(getValue());
 			break;
 		}
 	}

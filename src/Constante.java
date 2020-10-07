@@ -27,13 +27,13 @@ public class Constante extends Component{
 	}
 
 	@Override
-	public boolean external(boolean show) {
+	public boolean external() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean internal(boolean show) {
+	public boolean internal() {
 		// TODO Auto-generated method stub
 		switch(getCurrent_state()) {
 		case 0:
@@ -45,18 +45,18 @@ public class Constante extends Component{
 			setNext_state(2);
 			break;
 		}
-		return swapState(show);
+		return swapState();
 	}
 
 	@Override
-	public void lambda(boolean show) {
+	public void lambda() {
 		// TODO Auto-generated method stub
 		switch(getCurrent_state()) {
 		case 0:
-			getOutputs().get(0).setValue(0.0, show);
+			getOutputs().get(0).setValue(0.0);
 			break;
 		case 1:
-			getOutputs().get(0).setValue(value, show);
+			getOutputs().get(0).setValue(value);
 			break;
 		}
 	}

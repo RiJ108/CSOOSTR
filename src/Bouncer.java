@@ -9,24 +9,40 @@ public class Bouncer extends Component{
 		init();
 		setName("Bouncer");
 		setValue(0.0);
+		setReduction(0.5);
+		isFlag(true);
 	}
 	
 	public Bouncer(String name) {
 		init();
 		setName(name);
 		setValue(0.0);
+		setReduction(0.5);
+		isFlag(true);
 	}
 	
 	public Bouncer(String name, double value) {
 		init();
 		setName(name);
 		setValue(value);
+		setReduction(0.5);
+		isFlag(true);
 	}
 	
 	public Bouncer(double value) {
 		init();
 		setName("Bouncer");
 		setValue(value);
+		setReduction(0.5);
+		isFlag(true);
+	}
+	
+	public Bouncer(double value, double reduction) {
+		init();
+		setName("Bouncer");
+		setValue(value);
+		setReduction(reduction);
+		isFlag(true);
 	}
 
 	public boolean isFlag() {
@@ -54,7 +70,7 @@ public class Bouncer extends Component{
 	}
 
 	@Override
-	public boolean external(boolean show) {
+	public boolean external() {
 		// TODO Auto-generated method stub
 		if(isFlag()) {
 			if((double)getInputs().get(0).getValue() <= 0.0) {
@@ -70,7 +86,7 @@ public class Bouncer extends Component{
 	}
 
 	@Override
-	public boolean internal(boolean show) {
+	public boolean internal() {
 		// TODO Auto-generated method stub
 		switch(getCurrent_state()) {
 		case 0:
@@ -82,18 +98,18 @@ public class Bouncer extends Component{
 			setNext_state(2);
 			break;
 		}
-		return swapState(show);
+		return swapState();
 	}
 
 	@Override
-	public void lambda(boolean show) {
+	public void lambda() {
 		// TODO Auto-generated method stub
 		switch(getCurrent_state()) {
 		case 0:
-			getOutputs().get(0).setValue(0.0, show);
+			getOutputs().get(0).setValue(0.0);
 			break;
 		case 1:
-			getOutputs().get(0).setValue(value, show);
+			getOutputs().get(0).setValue(value);
 		}
 	}
 

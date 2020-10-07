@@ -61,19 +61,13 @@ public class Integrator_TD extends Component{
 		this.step = step;
 	}
 	
-	public void integrate(boolean show) {
-		if(show) {
-			System.out.println("Integrate function***");
-			System.out.println(getDeri() + "\t" + getDelta());
-		}
+	public void integrate() {
 		setValue((double)getValue() + getDelta()*getDeri());
 	}
 
 	@Override
-	public boolean external(boolean show) {
+	public boolean external() {
 		// TODO Auto-generated method stub
-		if(show)
-			System.out.println("External " + getName());
 		setDeri((double)getInputs().get(0).getValue());
 		switch(getCurrent_state()) {
 		case 0:
@@ -81,11 +75,11 @@ public class Integrator_TD extends Component{
 			isSwitched(true);
 			setNext_state(1);
 		}
-		return swapState(show);
+		return swapState();
 	}
 
 	@Override
-	public boolean internal(boolean show) {
+	public boolean internal() {
 		// TODO Auto-generated method stub
 		switch(getCurrent_state()) {
 		case 0:
@@ -94,21 +88,21 @@ public class Integrator_TD extends Component{
 			setNext_state(1);
 			break;
 		case 1:
-			integrate(show);
+			integrate();
 			isSwitched(true);
 			setNext_state(0);
 			break;
 		}
-		return swapState(show);
+		return swapState();
 	}
 
 	@Override
-	public void lambda(boolean show) {
+	public void lambda() {
 		// TODO Auto-generated method stub
 		switch(getCurrent_state()) {
 		case 1:
 			if(getOutputs().size() != 0) {
-				getOutputs().get(0).setValue(value, show);
+				getOutputs().get(0).setValue(value);
 			}
 		}
 	}
